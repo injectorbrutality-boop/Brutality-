@@ -3,289 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brutality Injector - Final Stable</title>
+    <title>ALFIYAH STORE | Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;800&display=swap');
-        body { background: #f1f5f9; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .cyber-font { font-family: 'Orbitron', sans-serif; }
-        .card-premium { background: white; border: 1px solid #e2e8f0; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .card-premium:active { transform: scale(0.96); }
-        .active-dur { background: #2563eb !important; color: white !important; border-color: #2563eb !important; }
-        .marquee-container { background: #eff6ff; color: #2563eb; overflow: hidden; white-space: nowrap; font-weight: 700; font-size: 11px; padding: 8px; border-radius: 8px; }
-        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1e293b; }
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        
+        /* Background Tools Menu Style */
+        .nav-tool-bg {
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 1rem;
+            display: inline-flex;
+            gap: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-tool {
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        /* State saat tombol aktif (Premium/VIP) */
+        .btn-tool-active {
+            background: white;
+            color: #C5A021;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-tool-inactive {
+            color: #94a3b8;
+        }
+
+        .btn-tool-inactive:hover {
+            color: #64748b;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .card-server {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-server:hover {
+            border-color: #C5A021;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(197, 160, 33, 0.15);
+        }
+
+        .logo-line {
+            height: 2px;
+            width: 30px;
+            background: #C5A021;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <header class="bg-white pt-8 pb-6 text-center border-b">
-        <h1 class="cyber-font text-2xl font-black text-slate-900">INJECTOR <span class="text-blue-600">BRUTALITY</span></h1>
-        <p class="text-[9px] tracking-[0.5em] text-slate-400 font-bold uppercase mt-2">server premium all protokol</p>
+<div id="app">
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col items-center">
+            <div class="flex flex-col items-center cursor-pointer mb-6" @click="view = 'home'">
+                <div class="flex items-center gap-3">
+                    <div class="logo-line"></div>
+                    <span class="font-luxury text-2xl tracking-[0.2em] font-bold text-slate-800">ALFIYAH</span>
+                    <div class="logo-line"></div>
+                </div>
+                <span class="text-[9px] tracking-[0.5em] font-black text-[#C5A021] -mt-1 uppercase">Jagoan Server Premium</span>
+            </div>
+
+            <nav class="nav-tool-bg">
+                <button 
+                    @click="category = 'premium'; view = 'home'" 
+                    :class="category === 'premium' && view === 'home' ? 'btn-tool-active' : 'btn-tool-inactive'"
+                    class="btn-tool flex items-center gap-2">
+                    <span class="text-sm">🌐</span> Premium
+                </button>
+                <button 
+                    @click="category = 'vip'; view = 'home'" 
+                    :class="category === 'vip' && view === 'home' ? 'btn-tool-active' : 'btn-tool-inactive'"
+                    class="btn-tool flex items-center gap-2">
+                    <span class="text-sm">👑</span> VIP Server
+                </button>
+            </nav>
+        </div>
     </header>
 
-    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md px-4 py-3 shadow-sm border-b-2 border-blue-600">
-        <div class="container mx-auto flex flex-col gap-3">
-            <div class="flex items-center justify-between bg-slate-50 border rounded-xl py-2 px-5">
-                <div class="flex flex-col">
-                    <span id="live-date" class="text-[10px] font-bold text-slate-400 uppercase">Loading...</span>
-                    <span id="live-clock" class="text-sm font-black text-blue-600 cyber-font">00:00:00</span>
+    <main v-if="view === 'home'" class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div v-for="s in filteredServers" :key="s.name" class="card-server rounded-[2rem] p-8 flex flex-col">
+                <div class="flex justify-between items-start mb-8">
+                    <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 shadow-sm">
+                        <span v-if="category === 'premium'" class="text-xl">🌐</span>
+                        <span v-else class="text-xl">👑</span>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Start From</p>
+                        <p class="text-2xl font-black text-[#C5A021] leading-none">{{ s.priceDay }}<span class="text-[10px] text-slate-400">/d</span></p>
+                    </div>
                 </div>
-                <div onclick="toggleModal('cart-modal')" class="cursor-pointer flex items-center gap-2">
-                    <span class="text-xs font-bold text-slate-700 uppercase">Cart</span>
-                    <div class="relative text-xl">🛒 .<span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5">0</span></div>
+
+                <h3 class="font-bold text-slate-800 text-lg mb-6 uppercase tracking-tight">{{ s.name }}</h3>
+
+                <div class="space-y-4 mb-10">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-400 font-semibold uppercase tracking-wider">Quota</span>
+                        <span class="font-bold text-slate-700">{{ s.quota === '0 GB' ? 'UNLIMITED' : s.quota }}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-400 font-semibold uppercase tracking-wider">Limit IP</span>
+                        <span class="font-bold text-slate-700">{{ s.limit }} Device</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs border-t border-slate-50 pt-4">
+                        <span class="text-slate-400 font-semibold uppercase tracking-wider">Monthly Pay</span>
+                        <span class="font-bold text-[#C5A021]">Rp {{ formatUang(parseInt(s.priceDay.replace(/[^0-9]/g, '')) * 30) }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="flex gap-2">
-                <button onclick="toggleModal('speedtest-modal')" class="flex-1 py-2.5 rounded-lg bg-blue-600 text-white text-[10px] font-bold uppercase">🚀  SPEEDTEST</button>
-                <button onclick="toggleModal('host-ip-modal')" class="flex-1 py-2.5 rounded-lg bg-slate-800 text-white text-[10px] font-bold uppercase">🛠️  HOST TO IP</button>
-                <button onclick="runCheckISP()" class="flex-1 py-2.5 rounded-lg border-2 border-blue-600 text-blue-600 text-[10px] font-bold uppercase">🔍  CHECKER ISP</button>
+
+                <button @click="openDetail(s)" class="w-full py-4 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.25em] hover:bg-[#C5A021] transition-all">
+                    DETAIL
+                </button>
             </div>
         </div>
-    </nav>
-
-    <div class="px-4 mt-6">
-        <div class="card-premium rounded-2xl p-5 border-l-8 border-blue-600">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">SSH - VMES - VLES - TROJAN</span>
-                <span class="text-xl font-black text-slate-900">🌐🌐🌐</span>
-            </div>
-            <div class="marquee-container">
-                <span class="marquee-text">SELAMAT DATANG JURAGAN SILAHKAN PILIH SERVER TERBAIK ANDA - HUBUNGI ADMIN UNTUK TRIAL DAN ORDER - SSH VMES VLES TROJAN.</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="px-4 mt-6 grid grid-cols-5 gap-2 text-center text-[9px] font-bold uppercase">
-        <div onclick="filterProducts('all')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🌎</div><span class="mt-1 block">All</span></div>
-        <div onclick="filterProducts('sg')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🇸🇬</div><span class="mt-1 block">SG</span></div>
-        <div onclick="filterProducts('id')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🇮🇩</div><span class="mt-1 block">ID</span></div>
-        <div onclick="filterProducts('udp')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">✈️</div><span class="mt-1 block">UDP</span></div>
-        <div onclick="window.location.reload()" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl text-blue-600">🔄</div><span class="mt-1 block">Reset</span></div>
-    </div>
-
-    <main class="px-4 mt-8">
-        <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-blue-600 pl-2">list server premium</h2>
-        <div id="product-container" class="grid grid-cols-2 gap-3"></div>
     </main>
 
-    <section class="px-4 mt-10 mb-8 space-y-3">
-        <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-blue-600 pl-2">Community</h2>
-        <a href="https://chat.whatsapp.com/EQxDbfZ3FwJFdwP2XZrSCw" class="flex items-center gap-3 bg-white p-3 rounded-xl border">
-            <div class="w-10 h-10 bg-green-100 flex items-center justify-center rounded-full">💬</div>
-            <div><p class="text-[10px] font-black uppercase">Grup WhatsApp</p><p class="text-[8px] text-slate-400">Diskusi & Informasi </p></div>
-        </a>
-        <a href="https://whatsapp.com/channel/0029VbBcsX2I7BeAjm1tX20Q" class="flex items-center gap-3 bg-white p-3 rounded-xl border">
-            <div class="w-10 h-10 bg-blue-100 flex items-center justify-center rounded-full">📢</div>
-            <div><p class="text-[10px] font-black uppercase">Saluran WhatsApp</p><p class="text-[8px] text-slate-400">Informasi & testimoni</p></div>
-        </a>
-        <div onclick="toggleModal('about-modal')" class="flex items-center gap-3 bg-white p-3 rounded-xl border-dashed border-2 cursor-pointer">
-            <div class="w-10 h-10 bg-slate-100 flex items-center justify-center rounded-full text-lg">👤</div>
-            <div><p class="text-[10px] font-black uppercase">Tentang Saya</p><p class="text-[8px] text-slate-400">profil Store</p></div>
-        </div>
-    </section>
+    <div v-else class="max-w-xl mx-auto px-6 py-12">
+        <button @click="view = 'home'" class="mb-8 text-[10px] font-bold text-slate-400 hover:text-black flex items-center gap-2 uppercase tracking-[0.2em]">
+            <span>←</span> Back to Gallery
+        </button>
+        
+        <div class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl">
+            <div class="text-center mb-10">
+                <p class="text-[10px] font-bold text-[#C5A021] uppercase tracking-[0.4em] mb-2">Order Confirmation</p>
+                <h2 class="text-2xl font-black text-slate-800 tracking-tight uppercase">{{ selectedItem.name }}</h2>
+            </div>
 
-    <div id="isp-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
-            <h2 class="cyber-font text-blue-600 text-center mb-6">CHECK RESULTS</h2>
-            <div class="space-y-3">
-                <div class="bg-slate-50 p-3 rounded-xl border">
-                    <p class="text-[9px] text-slate-400 font-black uppercase">IP Address</p>
-                    <p id="res-ip" class="text-sm font-bold text-slate-800">Menunggu...</p>
+            <form @submit.prevent="sendOrder" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Customer Name</label>
+                    <input v-model="form.nama" required placeholder="Masukkan Nama Anda" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-[#C5A021] outline-none font-semibold text-sm transition-all">
                 </div>
-                <div class="bg-slate-50 p-3 rounded-xl border">
-                    <p class="text-[9px] text-slate-400 font-black uppercase">ISP Provider</p>
-                    <p id="res-isp" class="text-sm font-bold text-slate-800 italic">Menunggu...</p>
+
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Select Duration</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button type="button" v-for="d in durasiOptions" 
+                                @click="form.durasi = d"
+                                :class="form.durasi.hari === d.hari ? 'ring-2 ring-[#C5A021] bg-yellow-50 text-[#C5A021]' : 'bg-white text-slate-500 ring-1 ring-slate-200'"
+                                class="py-4 rounded-2xl text-[11px] font-bold transition-all">
+                            {{ d.hari }} Days<br>
+                            <span class="text-[9px] opacity-60">Rp {{ formatUang(d.harga) }}</span>
+                        </button>
+                    </div>
                 </div>
+
+                <div class="p-5 bg-slate-900 rounded-[1.5rem] mt-4 flex justify-between items-center">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">TOTAL PAYMENT</span>
+                    <span class="text-xl font-black text-white italic">Rp {{ formatUang(form.durasi.harga) }}</span>
+                </div>
+
+                <button type="submit" class="w-full bg-[#25D366] text-white py-5 rounded-[1.5rem] font-black uppercase tracking-[0.3em] text-[10px] hover:bg-[#128C7E] transition-all shadow-lg shadow-green-100">
+                    ORDER NOW
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="py-20 text-center border-t border-slate-100 bg-white mt-10">
+        <div class="flex flex-col items-center">
+             <div class="flex items-center gap-2 mb-2 opacity-30">
+                <div class="h-[1px] w-8 bg-slate-900"></div>
+                <span class="font-luxury text-sm font-bold tracking-widest uppercase">Alfiyah</span>
+                <div class="h-[1px] w-8 bg-slate-900"></div>
             </div>
-            <button onclick="toggleModal('isp-modal')" class="w-full mt-6 py-4 bg-slate-900 text-white rounded-2xl font-black text-xs">TUTUP</button>
+            <p class="text-[9px] text-slate-400 font-bold tracking-widest uppercase">High Performance Network • Admin: 087788122372</p>
         </div>
-    </div>
+    </footer>
+</div>
 
-    <div id="detail-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
-            <h2 id="modal-name" class="cyber-font text-lg text-slate-900 mb-2 uppercase"></h2>
-            <div id="modal-details" class="text-[10px] text-slate-400 font-bold mb-6 border-b pb-2"></div>
-            <div class="grid grid-cols-3 gap-2 mb-6">
-                <button onclick="setDuration(7, this)" class="dur-btn border py-3 rounded-xl text-[10px] font-black uppercase">7 Hari</button>
-                <button onclick="setDuration(15, this)" class="dur-btn border py-3 rounded-xl text-[10px] font-black uppercase">15 Hari</button>
-                <button onclick="setDuration(30, this)" class="dur-btn active-dur border py-3 rounded-xl text-[10px] font-black uppercase">30 Hari</button>
-            </div>
-            <p id="dynamic-price" class="text-3xl font-black text-blue-600 text-center mb-6">Rp 0</p>
-            <button onclick="processInstant()" class="w-full bg-slate-900 text-white py-4 rounded-2xl text-xs font-black uppercase mb-2">💰 CHECKOUT SEKARANG</button>
-            <button onclick="processAddCart()" class="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl text-xs font-black uppercase">🛒 TAMBAHKAN KE TROLI</button>
-        </div>
-    </div>
-
-    <div id="about-modal" class="fixed inset-0 bg-black/60 hidden z-[200] flex items-center justify-center p-6 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-8 shadow-2xl text-center">
-            <div</div>
-            <h2 class="cyber-font text-lg text-slate-900">INJECTOR BRUTALITY</h2>
-            <p class="text-[10px] text-slate-400 font-bold uppercase mb-4 tracking-widest">server premium all protokol</p>
-            <div class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl text-left italic">
-                Injector Brutality adalah perusahaan mandiri sejak 2020,dibangun untuk menyediakan kebutuhan tunneling dengan server premium all protokol yg sudah teruji dan terpercaya.
-            </div>
-            <button onclick="toggleModal('about-modal')" class="w-full mt-6 py-4 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase">Tutup</button>
-        </div>
-    </div>
-
-    <div id="host-ip-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
-            <h2 class="cyber-font text-blue-600 mb-4 text-center">CONVERT RESULTS</h2>
-            <input id="host-input" type="text" placeholder="google.com" class="w-full bg-slate-50 border p-4 rounded-xl mb-4 text-sm font-bold uppercase outline-none focus:ring-2 ring-blue-600">
-            <div id="ip-result" class="bg-slate-900 text-blue-400 p-4 rounded-xl text-center text-xs font-mono mb-4">READY...</div>
-            <div class="flex gap-2">
-                <button onclick="toggleModal('host-ip-modal')" class="flex-1 py-3 bg-slate-100 rounded-xl text-xs font-bold">BATAL</button>
-                <button onclick="runResolveHost()" class="flex-1 bg-blue-600 text-white py-3 rounded-xl text-xs font-bold">START</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="cart-modal" class="fixed inset-0 bg-white hidden z-[200] p-6 overflow-y-auto">
-        <div class="flex justify-between items-center mb-8 border-b pb-4">
-            <h2 class="cyber-font text-blue-600 text-xl uppercase">Keranjang</h2>
-            <button onclick="toggleModal('cart-modal')" class="text-3xl font-light">&times;</button>
-        </div>
-        <div id="cart-list" class="space-y-4 mb-32"></div>
-        <div class="fixed bottom-0 left-0 right-0 bg-white p-6 border-t shadow-2xl">
-            <div class="flex justify-between mb-4 font-black text-xl"><span>TOTAL</span><span id="cart-total" class="text-blue-600">Rp 0</span></div>
-            <button onclick="runCheckout()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase">💰 Checkout sekarang</button>
-        </div>
-    </div>
-
-    <div id="speedtest-modal" class="fixed inset-0 bg-white hidden z-[150] flex flex-col">
-        <div class="p-4 flex justify-between border-b items-center font-bold text-blue-600">
-            <span>BUKA TAB BARU BIAR LEBIH AKURAT</span>
-            <button onclick="toggleModal('speedtest-modal')" class="text-2xl">&times;</button>
-        </div>
-        <iframe src="https://fast.com" class="flex-grow w-full border-none"></iframe>
-    </div> 
-
-    <script>
-        const adminWA = "6285890569310";
-        const products = [
-            { id: 1, name: "ID NUSA 1 IP", type: 'id', priceDay: 400, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
-            { id: 2, name: "ID NUSA 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
-            { id: 3, name: "ID BIZNET 1 IP", type: 'id', priceDay: 400, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
-            { id: 4, name: "ID BIZNET 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
-            { id: 5, name: "SGDO 2 IP", type: 'sg', priceDay: 400, priceMonth: 12000, quota: "200GB", limit: "2 IP" },
-            { id: 6, name: "SGDO 3 IP", type: 'sg', priceDay: 500, priceMonth: 15000, quota: "500GB", limit: "3 IP" },
-            { id: 7, name: "UDP ZIVPN ID BIZNET", type: 'id udp', priceDay: 720, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
-            { id: 8, name: "UDP ZIVPN ID TECHNO", type: 'id udp', priceDay: 720, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
-            { id: 9, name: "ID TECHNO 1 IP", type: 'id', priceDay: 400, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
-            { id: 10, name: "ID TECHNO 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" }
-        ];
-
-        let cart = [], currentProduct = null, selectedDuration = 30;
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('live-date').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' });
-            document.getElementById('live-clock').innerText = now.toLocaleTimeString('id-ID');
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                view: 'home',
+                category: 'premium',
+                selectedItem: null,
+                form: { nama: '', durasi: { hari: 10, harga: 0 } },
+                premiumServers: [
+                    { name: "BIZNET PREMIUM", priceDay: "Rp 400", quota: "500 GB", limit: "2" },
+                    { name: "IKD PREMIUM", priceDay: "Rp 400", quota: "250 GB", limit: "2" },
+                    { name: "HERZA PREMIUM", priceDay: "Rp 400", quota: "250 GB", limit: "2" },
+                    { name: "NEVA PREMIUM", priceDay: "Rp 400", quota: "250 GB", limit: "2" },
+                    { name: "NUSA PREMIUM", priceDay: "Rp 400", quota: "250 GB", limit: "2" },
+                    { name: "TECHNO PREMIUM", priceDay: "Rp 400", quota: "250 GB", limit: "2" },
+                    { name: "UDP ZIVPN SG", priceDay: "Rp 400", quota: "0 GB", limit: "1" }
+                ],
+                vipServers: [
+                    { name: "BIZNET VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "IKD VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "HERZA VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "NEVA VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "NUSA VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "TECHNO VIP", priceDay: "Rp 500", quota: "500 GB", limit: "2" },
+                    { name: "UDP ZIVPN ID", priceDay: "Rp 500", quota: "0 GB", limit: "2" }
+                ]
+            }
+        },
+        computed: {
+            filteredServers() {
+                return this.category === 'premium' ? this.premiumServers : this.vipServers;
+            },
+            durasiOptions() {
+                if (!this.selectedItem) return [];
+                const harian = parseInt(this.selectedItem.priceDay.replace(/[^0-9]/g, ''));
+                return [
+                    { hari: 10, harga: harian * 10 },
+                    { hari: 20, harga: harian * 20 },
+                    { hari: 30, harga: harian * 30 }
+                ];
+            }
+        },
+        methods: {
+            openDetail(item) {
+                this.selectedItem = item;
+                const harian = parseInt(item.priceDay.replace(/[^0-9]/g, ''));
+                this.form.durasi = { hari: 10, harga: harian * 10 };
+                this.view = 'detail';
+                window.scrollTo(0,0);
+            },
+            formatUang(val) {
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            },
+            sendOrder() {
+                const phone = "6287788122372";
+                const msg = `👑 *ORDER ALFIYAH STORE*\n` +
+                            `━━━━━━━━━━━━━━━\n` +
+                            `👤 User : ${this.form.nama}\n` +
+                            `🚀 Server : ${this.selectedItem.name}\n` +
+                            `⏳ Paket : ${this.form.durasi.hari} Hari\n` +
+                            `💰 Total : Rp ${this.formatUang(this.form.durasi.harga)}\n` +
+                            `━━━━━━━━━━━━━━━`;
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+            }
         }
-        setInterval(updateClock, 1000);
-
-        function renderProducts(data = products) {
-            const container = document.getElementById('product-container');
-            container.innerHTML = data.map(p => `
-                <div class="card-premium p-4 rounded-2xl cursor-pointer" onclick="openDetail(${p.id})">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-[8px] font-black text-blue-600 px-2 py-0.5 bg-blue-50 rounded uppercase">${p.type.split(' ')[0]}</span>
-                        <span class="text-[8px] font-bold text-slate-400">${p.limit}</span>
-                    </div>
-                    <h3 class="text-[10px] font-black text-slate-800 mb-3 h-8 overflow-hidden uppercase">${p.name}</h3>
-                    <div class="flex justify-between items-center">
-                        <p class="text-[11px] font-black text-blue-600">Rp ${p.priceDay}/Hr</p>
-                        <span class="text-[9px] bg-blue-600 text-white px-2 py-0.5 rounded font-black uppercase">DETAIL</span>
-                    </div>
-                </div>`).join('');
-        }
-
-        function filterProducts(cat) {
-            if(cat === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.type.includes(cat)));
-        }
-
-        function openDetail(id) {
-            currentProduct = products.find(p => p.id === id);
-            document.getElementById('modal-name').innerText = currentProduct.name;
-            document.getElementById('modal-details').innerText = `KUOTA: ${currentProduct.quota} | LIMIT: ${currentProduct.limit}`;
-            setDuration(30, document.querySelectorAll('.dur-btn')[2]);
-            toggleModal('detail-modal');
-        }
-
-        function setDuration(days, el) {
-            selectedDuration = days;
-            document.querySelectorAll('.dur-btn').forEach(b => b.classList.remove('active-dur'));
-            el.classList.add('active-dur');
-            let price = (days === 30) ? currentProduct.priceMonth : currentProduct.priceDay * days;
-            currentProduct.activePrice = price;
-            document.getElementById('dynamic-price').innerText = `Rp ${price.toLocaleString('id-ID')}`;
-        }
-
-        async function runCheckISP() {
-            toggleModal('isp-modal');
-            const resIp = document.getElementById('res-ip'), resIsp = document.getElementById('res-isp');
-            resIp.innerText = "Mendeteksi..."; resIsp.innerText = "Mendeteksi...";
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                resIp.innerText = data.ip || "Error";
-                resIsp.innerText = data.org || "Unknown";
-            } catch (e) { resIp.innerText = "Koneksi Bermasalah"; }
-        }
-
-        async function runResolveHost() {
-            const host = document.getElementById('host-input').value.trim();
-            const resDiv = document.getElementById('ip-result');
-            if(!host) return;
-            resDiv.innerText = "RESOLVING...";
-            try {
-                const res = await fetch(`https://dns.google/resolve?name=${host}&type=A`);
-                const json = await res.json();
-                resDiv.innerText = json.Answer ? json.Answer[0].data : "Gagal";
-            } catch (e) { resDiv.innerText = "API Error"; }
-        }
-
-        function processAddCart() {
-            cart.push({...currentProduct, finalPrice: currentProduct.activePrice, days: selectedDuration});
-            updateCart();
-            toggleModal('detail-modal');
-        }
-
-        function updateCart() {
-            document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-list'), total = cart.reduce((s, i) => s + i.finalPrice, 0);
-            list.innerHTML = cart.length ? cart.map((item, i) => `
-                <div class="bg-slate-50 p-4 rounded-xl flex justify-between items-center border">
-                    <div><p class="font-black text-xs uppercase">${item.name}</p><p class="text-blue-600 text-[10px] font-bold">${item.days} Hari - Rp ${item.finalPrice.toLocaleString()}</p></div>
-                    <button onclick="removeCart(${i})" class="text-red-500 font-black text-[10px]">HAPUS</button>
-                </div>`).join('') : '<p class="text-center py-10 opacity-30">Keranjang Kosong</p>';
-            document.getElementById('cart-total').innerText = `Rp ${total.toLocaleString()}`;
-        }
-
-        function removeCart(i) { cart.splice(i, 1); updateCart(); }
-
-        function processInstant() {
-            const pesan = `Halo Admin,Order Server:\n- ${currentProduct.name} (${selectedDuration} Hari)\nTotal: Rp ${currentProduct.activePrice.toLocaleString()}`;
-            window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`);
-        }
-
-        function runCheckout() {
-            if(cart.length === 0) return alert('Keranjang kosong!');
-            const items = cart.map(i => `- ${i.name} (${i.days} Hari)`).join('\n');
-            const total = cart.reduce((s, i) => s + i.finalPrice, 0);
-            const pesan = `Halo Admin,Order Server:\n${items}\n\nTOTAL: Rp ${total.toLocaleString()}`;
-            window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`);
-        }
-
-        function toggleModal(id) {
-            document.getElementById(id).classList.toggle('hidden');
-        }
-
-        // Jalankan saat start
-        updateClock();
-        renderProducts();
-    </script>
+    }).mount('#app');
+</script>
 </body>
 </html>
