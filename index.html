@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brutality Injector - Final Stable</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;800&display=swap');
+        body { background: #f1f5f9; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
+        .card-premium { background: white; border: 1px solid #e2e8f0; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card-premium:active { transform: scale(0.96); }
+        .active-dur { background: #2563eb !important; color: white !important; border-color: #2563eb !important; }
+        .marquee-container { background: #eff6ff; color: #2563eb; overflow: hidden; white-space: nowrap; font-weight: 700; font-size: 11px; padding: 8px; border-radius: 8px; }
+        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="bg-white pt-8 pb-6 text-center border-b">
+        <h1 class="cyber-font text-2xl font-black text-slate-900">INJECTOR <span class="text-blue-600">BRUTALITY</span></h1>
+        <p class="text-[9px] tracking-[0.5em] text-slate-400 font-bold uppercase mt-2">server premium all protokol</p>
+    </header>
+
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md px-4 py-3 shadow-sm border-b-2 border-blue-600">
+        <div class="container mx-auto flex flex-col gap-3">
+            <div class="flex items-center justify-between bg-slate-50 border rounded-xl py-2 px-5">
+                <div class="flex flex-col">
+                    <span id="live-date" class="text-[10px] font-bold text-slate-400 uppercase">Loading...</span>
+                    <span id="live-clock" class="text-sm font-black text-blue-600 cyber-font">00:00:00</span>
+                </div>
+                <div onclick="toggleModal('cart-modal')" class="cursor-pointer flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-700 uppercase">Cart</span>
+                    <div class="relative text-xl">🛒 .<span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5">0</span></div>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="toggleModal('speedtest-modal')" class="flex-1 py-2.5 rounded-lg bg-blue-600 text-white text-[10px] font-bold uppercase">🚀  SPEEDTEST</button>
+                <button onclick="toggleModal('host-ip-modal')" class="flex-1 py-2.5 rounded-lg bg-slate-800 text-white text-[10px] font-bold uppercase">🛠️  HOST TO IP</button>
+                <button onclick="runCheckISP()" class="flex-1 py-2.5 rounded-lg border-2 border-blue-600 text-blue-600 text-[10px] font-bold uppercase">🔍  CHECKER ISP</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="px-4 mt-6">
+        <div class="card-premium rounded-2xl p-5 border-l-8 border-blue-600">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">SSH - VMES - VLES - TROJAN</span>
+                <span class="text-xl font-black text-slate-900">🌐🌐🌐</span>
+            </div>
+            <div class="marquee-container">
+                <span class="marquee-text">SELAMAT DATANG JURAGAN SILAHKAN PILIH SERVER TERBAIK ANDA - HUBUNGI ADMIN UNTUK TRIAL DAN ORDER - SSH VMES VLES TROJAN.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 mt-6 grid grid-cols-5 gap-2 text-center text-[9px] font-bold uppercase">
+        <div onclick="filterProducts('all')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🌎</div><span class="mt-1 block">All</span></div>
+        <div onclick="filterProducts('sg')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🇸🇬</div><span class="mt-1 block">SG</span></div>
+        <div onclick="filterProducts('id')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">🇮🇩</div><span class="mt-1 block">ID</span></div>
+        <div onclick="filterProducts('udp')" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl">✈️</div><span class="mt-1 block">UDP</span></div>
+        <div onclick="window.location.reload()" class="cursor-pointer"><div class="w-12 h-12 card-premium rounded-xl flex items-center justify-center mx-auto text-xl text-blue-600">🔄</div><span class="mt-1 block">Reset</span></div>
+    </div>
+
+    <main class="px-4 mt-8">
+        <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-blue-600 pl-2">list server premium</h2>
+        <div id="product-container" class="grid grid-cols-2 gap-3"></div>
+    </main>
+
+    <section class="px-4 mt-10 mb-8 space-y-3">
+        <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-blue-600 pl-2">Community</h2>
+        <a href="https://chat.whatsapp.com/EQxDbfZ3FwJFdwP2XZrSCw" class="flex items-center gap-3 bg-white p-3 rounded-xl border">
+            <div class="w-10 h-10 bg-green-100 flex items-center justify-center rounded-full">💬</div>
+            <div><p class="text-[10px] font-black uppercase">Grup WhatsApp</p><p class="text-[8px] text-slate-400">Diskusi & Informasi </p></div>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbBcsX2I7BeAjm1tX20Q" class="flex items-center gap-3 bg-white p-3 rounded-xl border">
+            <div class="w-10 h-10 bg-blue-100 flex items-center justify-center rounded-full">📢</div>
+            <div><p class="text-[10px] font-black uppercase">Saluran WhatsApp</p><p class="text-[8px] text-slate-400">Informasi & testimoni</p></div>
+        </a>
+        <div onclick="toggleModal('about-modal')" class="flex items-center gap-3 bg-white p-3 rounded-xl border-dashed border-2 cursor-pointer">
+            <div class="w-10 h-10 bg-slate-100 flex items-center justify-center rounded-full text-lg">👤</div>
+            <div><p class="text-[10px] font-black uppercase">Tentang Saya</p><p class="text-[8px] text-slate-400">profil Store</p></div>
+        </div>
+    </section>
+
+    <div id="isp-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
+            <h2 class="cyber-font text-blue-600 text-center mb-6">CHECK RESULTS</h2>
+            <div class="space-y-3">
+                <div class="bg-slate-50 p-3 rounded-xl border">
+                    <p class="text-[9px] text-slate-400 font-black uppercase">IP Address</p>
+                    <p id="res-ip" class="text-sm font-bold text-slate-800">Menunggu...</p>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border">
+                    <p class="text-[9px] text-slate-400 font-black uppercase">ISP Provider</p>
+                    <p id="res-isp" class="text-sm font-bold text-slate-800 italic">Menunggu...</p>
+                </div>
+            </div>
+            <button onclick="toggleModal('isp-modal')" class="w-full mt-6 py-4 bg-slate-900 text-white rounded-2xl font-black text-xs">TUTUP</button>
+        </div>
+    </div>
+
+    <div id="detail-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
+            <h2 id="modal-name" class="cyber-font text-lg text-slate-900 mb-2 uppercase"></h2>
+            <div id="modal-details" class="text-[10px] text-slate-400 font-bold mb-6 border-b pb-2"></div>
+            <div class="grid grid-cols-3 gap-2 mb-6">
+                <button onclick="setDuration(7, this)" class="dur-btn border py-3 rounded-xl text-[10px] font-black uppercase">7 Hari</button>
+                <button onclick="setDuration(15, this)" class="dur-btn border py-3 rounded-xl text-[10px] font-black uppercase">15 Hari</button>
+                <button onclick="setDuration(30, this)" class="dur-btn active-dur border py-3 rounded-xl text-[10px] font-black uppercase">30 Hari</button>
+            </div>
+            <p id="dynamic-price" class="text-3xl font-black text-blue-600 text-center mb-6">Rp 0</p>
+            <button onclick="processInstant()" class="w-full bg-slate-900 text-white py-4 rounded-2xl text-xs font-black uppercase mb-2">💰 CHECKOUT SEKARANG</button>
+            <button onclick="processAddCart()" class="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl text-xs font-black uppercase">🛒 TAMBAHKAN KE TROLI</button>
+        </div>
+    </div>
+
+    <div id="about-modal" class="fixed inset-0 bg-black/60 hidden z-[200] flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-8 shadow-2xl text-center">
+            <div</div>
+            <h2 class="cyber-font text-lg text-slate-900">INJECTOR BRUTALITY</h2>
+            <p class="text-[10px] text-slate-400 font-bold uppercase mb-4 tracking-widest">server premium all protokol</p>
+            <div class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl text-left italic">
+                Injector Brutality adalah perusahaan mandiri sejak 2020,dibangun untuk menyediakan kebutuhan tunneling dengan server premium all protokol yg sudah teruji dan terpercaya.
+            </div>
+            <button onclick="toggleModal('about-modal')" class="w-full mt-6 py-4 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase">Tutup</button>
+        </div>
+    </div>
+
+    <div id="host-ip-modal" class="fixed inset-0 bg-black/60 hidden z-[100] flex items-center justify-center p-6">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl">
+            <h2 class="cyber-font text-blue-600 mb-4 text-center">CONVERT RESULTS</h2>
+            <input id="host-input" type="text" placeholder="google.com" class="w-full bg-slate-50 border p-4 rounded-xl mb-4 text-sm font-bold uppercase outline-none focus:ring-2 ring-blue-600">
+            <div id="ip-result" class="bg-slate-900 text-blue-400 p-4 rounded-xl text-center text-xs font-mono mb-4">READY...</div>
+            <div class="flex gap-2">
+                <button onclick="toggleModal('host-ip-modal')" class="flex-1 py-3 bg-slate-100 rounded-xl text-xs font-bold">BATAL</button>
+                <button onclick="runResolveHost()" class="flex-1 bg-blue-600 text-white py-3 rounded-xl text-xs font-bold">START</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="fixed inset-0 bg-white hidden z-[200] p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8 border-b pb-4">
+            <h2 class="cyber-font text-blue-600 text-xl uppercase">Keranjang</h2>
+            <button onclick="toggleModal('cart-modal')" class="text-3xl font-light">&times;</button>
+        </div>
+        <div id="cart-list" class="space-y-4 mb-32"></div>
+        <div class="fixed bottom-0 left-0 right-0 bg-white p-6 border-t shadow-2xl">
+            <div class="flex justify-between mb-4 font-black text-xl"><span>TOTAL</span><span id="cart-total" class="text-blue-600">Rp 0</span></div>
+            <button onclick="runCheckout()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase">💰 Checkout sekarang</button>
+        </div>
+    </div>
+
+    <div id="speedtest-modal" class="fixed inset-0 bg-white hidden z-[150] flex flex-col">
+        <div class="p-4 flex justify-between border-b items-center font-bold text-blue-600">
+            <span>BUKA TAB BARU BIAR LEBIH AKURAT</span>
+            <button onclick="toggleModal('speedtest-modal')" class="text-2xl">&times;</button>
+        </div>
+        <iframe src="https://fast.com" class="flex-grow w-full border-none"></iframe>
+    </div> 
+
+    <script>
+        const adminWA = "6285890569310";
+        const products = [
+            { id: 1, name: "ID NUSA 1 IP", type: 'id', priceDay: 400, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
+            { id: 2, name: "ID NUSA 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
+            { id: 3, name: "ID BIZNET 1 IP", type: 'id', priceDay: 400, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
+            { id: 4, name: "ID BIZNET 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
+            { id: 5, name: "SGDO 2 IP", type: 'sg', priceDay: 400, priceMonth: 12000, quota: "200GB", limit: "2 IP" },
+            { id: 6, name: "SGDO 3 IP", type: 'sg', priceDay: 500, priceMonth: 15000, quota: "500GB", limit: "3 IP" },
+            { id: 7, name: "UDP ZIVPN ID BIZNET", type: 'id udp', priceDay: 720, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
+            { id: 8, name: "UDP ZIVPN ID TECHNO", type: 'id udp', priceDay: 720, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" },
+            { id: 9, name: "UDP ZIVPN SG 1 IP", type: 'sg udp', priceDay: 580, priceMonth: 12000, quota: "Unlimited", limit: "1 IP" },
+            { id: 10, name: "ID TECHNO 2 IP", type: 'id', priceDay: 500, priceMonth: 15000, quota: "Unlimited", limit: "2 IP" }
+        ];
+
+        let cart = [], currentProduct = null, selectedDuration = 30;
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-date').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' });
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('id-ID');
+        }
+        setInterval(updateClock, 1000);
+
+        function renderProducts(data = products) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = data.map(p => `
+                <div class="card-premium p-4 rounded-2xl cursor-pointer" onclick="openDetail(${p.id})">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[8px] font-black text-blue-600 px-2 py-0.5 bg-blue-50 rounded uppercase">${p.type.split(' ')[0]}</span>
+                        <span class="text-[8px] font-bold text-slate-400">${p.limit}</span>
+                    </div>
+                    <h3 class="text-[10px] font-black text-slate-800 mb-3 h-8 overflow-hidden uppercase">${p.name}</h3>
+                    <div class="flex justify-between items-center">
+                        <p class="text-[11px] font-black text-blue-600">Rp ${p.priceDay}/Hr</p>
+                        <span class="text-[9px] bg-blue-600 text-white px-2 py-0.5 rounded font-black uppercase">DETAIL</span>
+                    </div>
+                </div>`).join('');
+        }
+
+        function filterProducts(cat) {
+            if(cat === 'all') renderProducts(products);
+            else renderProducts(products.filter(p => p.type.includes(cat)));
+        }
+
+        function openDetail(id) {
+            currentProduct = products.find(p => p.id === id);
+            document.getElementById('modal-name').innerText = currentProduct.name;
+            document.getElementById('modal-details').innerText = `KUOTA: ${currentProduct.quota} | LIMIT: ${currentProduct.limit}`;
+            setDuration(30, document.querySelectorAll('.dur-btn')[2]);
+            toggleModal('detail-modal');
+        }
+
+        function setDuration(days, el) {
+            selectedDuration = days;
+            document.querySelectorAll('.dur-btn').forEach(b => b.classList.remove('active-dur'));
+            el.classList.add('active-dur');
+            let price = (days === 30) ? currentProduct.priceMonth : currentProduct.priceDay * days;
+            currentProduct.activePrice = price;
+            document.getElementById('dynamic-price').innerText = `Rp ${price.toLocaleString('id-ID')}`;
+        }
+
+        async function runCheckISP() {
+            toggleModal('isp-modal');
+            const resIp = document.getElementById('res-ip'), resIsp = document.getElementById('res-isp');
+            resIp.innerText = "Mendeteksi..."; resIsp.innerText = "Mendeteksi...";
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                resIp.innerText = data.ip || "Error";
+                resIsp.innerText = data.org || "Unknown";
+            } catch (e) { resIp.innerText = "Koneksi Bermasalah"; }
+        }
+
+        async function runResolveHost() {
+            const host = document.getElementById('host-input').value.trim();
+            const resDiv = document.getElementById('ip-result');
+            if(!host) return;
+            resDiv.innerText = "RESOLVING...";
+            try {
+                const res = await fetch(`https://dns.google/resolve?name=${host}&type=A`);
+                const json = await res.json();
+                resDiv.innerText = json.Answer ? json.Answer[0].data : "Gagal";
+            } catch (e) { resDiv.innerText = "API Error"; }
+        }
+
+        function processAddCart() {
+            cart.push({...currentProduct, finalPrice: currentProduct.activePrice, days: selectedDuration});
+            updateCart();
+            toggleModal('detail-modal');
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const list = document.getElementById('cart-list'), total = cart.reduce((s, i) => s + i.finalPrice, 0);
+            list.innerHTML = cart.length ? cart.map((item, i) => `
+                <div class="bg-slate-50 p-4 rounded-xl flex justify-between items-center border">
+                    <div><p class="font-black text-xs uppercase">${item.name}</p><p class="text-blue-600 text-[10px] font-bold">${item.days} Hari - Rp ${item.finalPrice.toLocaleString()}</p></div>
+                    <button onclick="removeCart(${i})" class="text-red-500 font-black text-[10px]">HAPUS</button>
+                </div>`).join('') : '<p class="text-center py-10 opacity-30">Keranjang Kosong</p>';
+            document.getElementById('cart-total').innerText = `Rp ${total.toLocaleString()}`;
+        }
+
+        function removeCart(i) { cart.splice(i, 1); updateCart(); }
+
+        function processInstant() {
+            const pesan = `Halo Admin,Order Server:\n- ${currentProduct.name} (${selectedDuration} Hari)\nTotal: Rp ${currentProduct.activePrice.toLocaleString()}`;
+            window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`);
+        }
+
+        function runCheckout() {
+            if(cart.length === 0) return alert('Keranjang kosong!');
+            const items = cart.map(i => `- ${i.name} (${i.days} Hari)`).join('\n');
+            const total = cart.reduce((s, i) => s + i.finalPrice, 0);
+            const pesan = `Halo Admin,Order Server:\n${items}\n\nTOTAL: Rp ${total.toLocaleString()}`;
+            window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`);
+        }
+
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        // Jalankan saat start
+        updateClock();
+        renderProducts();
+    </script>
+</body>
+</html>
